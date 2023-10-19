@@ -10,6 +10,30 @@ const ProfileModel = sequelize.define("Profile", {
     type: DataTypes.ENUM("owner", "user"),
     defaultValue: "user",
   },
+  address: {
+    type: DataTypes.TEXT("long"),
+    allowNull: true,
+  },
+  country: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  phone: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  language: {
+    type: DataTypes.ARRAY(DataTypes.STRING),
+    allowNull: true,
+  },
+  summary: {
+    type: DataTypes.TEXT("long"),
+    allowNull: true,
+  },
   last_login: {
     type: DataTypes.DATE,
     allowNull: true,

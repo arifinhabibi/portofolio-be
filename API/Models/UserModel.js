@@ -6,7 +6,9 @@ import ProjectModel from "./ProjectModel.js";
 import EducationModel from "./EducationModel.js";
 import CertificateModel from "./CertificateModel.js";
 import ContactModel from "./ContactModel.js";
+import SkillModel from "./SkillModel.js";
 
+// table schema
 const UserModel = sequelize.define("User", {
   username: {
     type: DataTypes.STRING,
@@ -20,9 +22,11 @@ const UserModel = sequelize.define("User", {
   },
 });
 
+// relational database
 UserModel.hasOne(ProfileModel);
 UserModel.hasMany(ExperienceModel);
 UserModel.hasMany(ProjectModel);
+UserModel.hasMany(SkillModel);
 UserModel.hasMany(EducationModel);
 UserModel.hasMany(CertificateModel);
 UserModel.hasMany(ContactModel);

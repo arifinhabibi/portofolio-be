@@ -1,3 +1,4 @@
+// helper response
 class ResponseJSON {
   static success(res, msg) {
     res.status(200).json({

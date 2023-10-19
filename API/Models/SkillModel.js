@@ -1,16 +1,19 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../Database/Connection.js";
 
-const ContactModel = sequelize.define("Contact", {
+const SkillModel = sequelize.define("Skill", {
   name: {
     type: DataTypes.STRING,
+    allowNull: false,
   },
   url: {
     type: DataTypes.STRING,
+    allowNull: true,
   },
-  logo: {
+  image: {
     type: DataTypes.BLOB,
+    allowNull: true,
   },
 });
 
-export default ContactModel;
+export default SkillModel;

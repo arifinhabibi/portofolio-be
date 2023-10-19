@@ -1,7 +1,7 @@
 {
   "name": "portofolio-be",
   "version": "1.0.0",
-  "description": "This is api application for my portofolio",
+  "description": "This is api application for my web portofolio",
   "main": "index.js",
   "type": "module",
   "scripts": {
