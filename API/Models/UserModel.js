@@ -23,12 +23,12 @@ const UserModel = sequelize.define("User", {
 });
 
 // relational database
-UserModel.hasOne(ProfileModel);
-UserModel.hasMany(ExperienceModel);
-UserModel.hasMany(ProjectModel);
-UserModel.hasMany(SkillModel);
-UserModel.hasMany(EducationModel);
-UserModel.hasMany(CertificateModel);
-UserModel.hasMany(ContactModel);
+UserModel.hasOne(ProfileModel, { as: "profile" });
+UserModel.hasMany(ExperienceModel, { as: "experience" });
+UserModel.hasMany(ProjectModel), { as: "project" };
+UserModel.hasMany(SkillModel, { as: "skill" });
+UserModel.hasMany(EducationModel, { as: "education" });
+UserModel.hasMany(CertificateModel, { as: "certificate" });
+UserModel.hasMany(ContactModel, { as: "contact" });
 
 export default UserModel;

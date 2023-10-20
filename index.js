@@ -3,6 +3,7 @@ import router from "./router.js";
 import bodyParser from "body-parser";
 import { configDotenv } from "dotenv";
 import configDatabase from "./API/Database/Config.js";
+import Middlware from "./API/Middleware/Middleware.js";
 
 const app = express();
 configDotenv();
@@ -23,6 +24,8 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/v1", router);
+
+app.use(Middlware.notFound404);
 
 app.listen(port, hostname, () => {
   if (hostname == "127.0.0.1" || hostname == "localhost") {

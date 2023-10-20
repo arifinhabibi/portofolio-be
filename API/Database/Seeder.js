@@ -1,10 +1,8 @@
 import ProfileModel from "../Models/ProfileModel.js";
 import UserModel from "../Models/UserModel.js";
-import crypto from "crypto";
+import bcrypt from "bcrypt";
 
-const md5 = crypto.createHash("md5");
-md5.update("121212");
-const password = md5.digest("hex");
+const password = bcrypt.hashSync("121212", 16);
 
 const users = [
   {
@@ -23,7 +21,7 @@ const databaseSeeder = () => {
     var createUser = UserModel.create(user);
     createUser.then((resp) => {
       ProfileModel.create({
-        UserId: resp.dataValues.id,
+        profileId: resp.dataValues.id,
         fullname: "Muhammad Arifin Habibi",
       });
     });
