@@ -34,6 +34,10 @@ const ProfileModel = sequelize.define("Profile", {
     type: DataTypes.TEXT("long"),
     allowNull: true,
   },
+  avatar: {
+    type: DataTypes.BLOB,
+    allowNull: true,
+  },
   last_login: {
     type: DataTypes.DATE,
     allowNull: true,

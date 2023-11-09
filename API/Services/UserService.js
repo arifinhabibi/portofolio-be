@@ -13,6 +13,20 @@ class UserService {
     });
     return user;
   }
+
+  static async findById(id) {
+    return await UserModel.findByPk(id);
+  }
+
+  static async update(userId, payload) {
+    const update = await UserModel.update(payload, {
+      where: {
+        id: userId,
+      },
+    });
+
+    return update;
+  }
 }
 
 export default UserService;

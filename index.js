@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import { configDotenv } from "dotenv";
 import configDatabase from "./API/Database/Config.js";
 import Middlware from "./API/Middleware/Middleware.js";
+import fs from "fs";
 
 const app = express();
 configDotenv();
@@ -29,8 +30,8 @@ app.use(Middlware.notFound404);
 
 app.listen(port, hostname, () => {
   if (hostname == "127.0.0.1" || hostname == "localhost") {
-    console.log(`Server started on ${hostname}:${port}`);
+    console.log(`Server started on http://${hostname}:${port}`);
   } else {
-    console.log(`Server started on ${hostname}`);
+    console.log(`Server started on https://${hostname}`);
   }
 });

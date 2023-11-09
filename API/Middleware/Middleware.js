@@ -6,18 +6,18 @@ configDotenv();
 
 class Middlware {
   static authJWT(req, res, next) {
-    const token = req.headers.authorization;
-    if (!token) {
+    const authorization = req.headers.authorization;
+    if (!authorization) {
       return ResponseJSON.unauthorized(res, "Unauthorized User!");
     }
-
-    try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-      req.user = decoded;
+    const token = authorization.split(" ");
+    jwt.verify(token[1], process.env.JWT_SECRET_KEY, (err, decoded) => {
+      if (err) {
+        return ResponseJSON.unauthorized(res, "Invalid Token or Expired!");
+      }
+      req.userInfo = decoded;
       next();
-    } catch (error) {
-      return ResponseJSON.unauthorized(res, "Invalid Token!");
-    }
+    });
   }
 
   static notFound404(req, res, next) {
