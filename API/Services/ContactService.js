@@ -5,8 +5,12 @@ class ContactService {
     return await ContactModel.findByPk(id);
   }
 
-  static async getAll() {
-    return await ContactModel.findAll();
+  static async getAll(userId) {
+    return await ContactModel.findAll({
+      where: {
+        UserId: userId,
+      },
+    });
   }
 
   static async create(payload) {

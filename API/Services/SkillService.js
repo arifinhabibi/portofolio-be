@@ -5,8 +5,12 @@ class SkillService {
     return await SkillModel.findByPk(id);
   }
 
-  static async getAll() {
-    return await SkillModel.findAll();
+  static async getAll(userId) {
+    return await SkillModel.findAll({
+      where: {
+        UserId: userId,
+      },
+    });
   }
 
   static async create(payload) {

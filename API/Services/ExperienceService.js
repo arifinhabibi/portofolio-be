@@ -5,11 +5,19 @@ class ExperienceService {
     return await ExperienceModel.findByPk(id);
   }
 
-  static async getAll() {
-    return await ExperienceModel.findAll();
+  static async getAll(userId) {
+    return await ExperienceModel.findAll({
+      where: {
+        UserId: userId,
+      },
+    });
   }
 
-  static async updateById(id, payload) {
+  static async create(payload) {
+    return await ExperienceModel.create(payload);
+  }
+
+  static async update(id, payload) {
     return await ExperienceModel.update(payload, {
       where: {
         id: id,

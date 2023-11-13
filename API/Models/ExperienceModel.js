@@ -6,6 +6,9 @@ const ExperienceModel = sequelize.define("Experience", {
   location: {
     type: DataTypes.STRING,
   },
+  title: {
+    type: DataTypes.STRING,
+  },
   start_time: {
     type: DataTypes.DATE,
     allowNull: true,

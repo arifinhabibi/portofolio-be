@@ -5,8 +5,12 @@ class ProjectService {
     return await ProjectModel.findByPk(id);
   }
 
-  static async getAll() {
-    return await ProjectModel.findAll();
+  static async getAll(userId) {
+    return await ProjectModel.findAll({
+      where: {
+        UserId: userId,
+      },
+    });
   }
 
   static async create(payload) {

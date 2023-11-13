@@ -109,6 +109,7 @@ class MainController {
   // experiences
   static getExperience(req, res) {
     const id = req.params.id;
+    
 
     ExperienceService.findById(id)
       .then((data) => {
@@ -119,7 +120,9 @@ class MainController {
       });
   }
   static getAllExperience(req, res) {
-    ExperienceService.getAll()
+    const userId = req.query.userId;
+
+    ExperienceService.getAll(userId)
       .then((data) => {
         return ResponseJSON.successWithData(res, "data has been loaded!", data);
       })
@@ -129,6 +132,9 @@ class MainController {
   }
   static createExperience(req, res) {
     const payload = req.body;
+    const userInfo = req.userInfo;
+
+    payload.UserId = userInfo.userId;
 
     ExperienceService.create(payload)
       .then(() => {
@@ -141,25 +147,51 @@ class MainController {
   static updateExperience(req, res) {
     const payload = req.body;
     const id = req.params.id;
+    const userInfo = req.userInfo;
 
-    ExperienceService.updateById(id, payload)
+    ExperienceService.findById(id).then((data) => {
+      if (data == null) {
+        return ResponseJSON.notFound(res, "data not founded!")  
+      }
+
+      if (data.dataValues.UserId != userInfo.userId) {
+        return ResponseJSON.unauthorized(res, "unauthorized user!");
+      }
+
+      ExperienceService.update(id, payload)
       .then(() => {
         return ResponseJSON.success(res, "update data successfully");
       })
       .catch((err) => {
         return ResponseJSON.badRequest(res, "error!", err);
       });
+    })
+
+   
   }
   static deleteExperience(req, res) {
     const id = req.params.id;
+    const userInfo = req.userInfo;
 
-    ExperienceService.delete(id)
-      .then(() => {
-        return ResponseJSON.success(res, "delete data successfully");
-      })
-      .catch(() => {
+    ExperienceService.findById(id).then((data) => {
+      if (data == null) {
         return ResponseJSON.notFound(res, "data not founded!");
-      });
+      }
+
+      if (data.dataValues.UserId != userInfo.userId) {
+        return ResponseJSON.unauthorized(res, "unauthorized user!");
+      }
+
+      ExperienceService.delete(id)
+        .then(() => {
+          return ResponseJSON.success(res, "delete data successfully");
+        })
+        .catch(() => {
+          return ResponseJSON.notFound(res, "data not founded!");
+        });
+    });
+
+    
   }
   // projects
   static getProject(req, res) {
@@ -174,7 +206,8 @@ class MainController {
       });
   }
   static getAllProject(req, res) {
-    ProjectService.getAll()
+    const userId = req.query.userId;
+    ProjectService.getAll(userId)
       .then((data) => {
         return ResponseJSON.successWithData(res, "data has been loaded!", data);
       })
@@ -184,6 +217,9 @@ class MainController {
   }
   static createProject(req, res) {
     const payload = req.body;
+    const userInfo = req.userInfo
+
+    payload.UserId = userInfo.userId
 
     ProjectService.create(payload)
       .then(() => {
@@ -196,25 +232,51 @@ class MainController {
   static updateProject(req, res) {
     const id = req.params.id;
     const payload = req.body;
+    const userInfo = req.userInfo;
 
-    ProjectService.update(id, payload)
-      .then(() => {
-        return ResponseJSON.success(res, "update data successfully");
-      })
-      .catch((err) => {
-        return ResponseJSON.badRequest(res, "error!", err);
-      });
+
+    ProjectService.findById(id).then((data) => {
+      if (data == null) {
+        return ResponseJSON.notFound(res, "data not founded");
+      }
+
+      if (data.dataValues.UserId != userInfo.userId) {
+        return ResponseJSON.unauthorized(res, "unauthorized user!");
+      }
+
+      ProjectService.update(id, payload)
+        .then(() => {
+          return ResponseJSON.success(res, "update data successfully");
+        })
+        .catch((err) => {
+          return ResponseJSON.badRequest(res, "error!", err);
+        });
+    });
+    
   }
   static deleteProject(req, res) {
     const id = req.params.id;
+    const userInfo = req.userInfo;
 
-    ProjectService.delete(id)
-      .then(() => {
-        return ResponseJSON.success(res, "delete data successfully");
-      })
-      .catch(() => {
-        return ResponseJSON.notFound(res, "data not founded!");
-      });
+    ProjectService.findById(id).then((data) => {
+      if (data == null) {
+        return ResponseJSON.notFound(res, "data not founded");
+      }
+
+      if (data.dataValues.UserId != userInfo.userId) {
+        return ResponseJSON.unauthorized(res, "unauthorized user!");
+      }
+
+      ProjectService.delete(id)
+        .then(() => {
+          return ResponseJSON.success(res, "delete data successfully");
+        })
+        .catch(() => {
+          return ResponseJSON.notFound(res, "data not founded!");
+        });
+    });
+
+    
   }
   // educations
   static getEducation(req, res) {
@@ -229,7 +291,9 @@ class MainController {
       });
   }
   static getAllEducation(req, res) {
-    EducationService.getAll()
+    const userId = req.query.userId;
+
+    EducationService.getAll(userId)
       .then((data) => {
         return ResponseJSON.successWithData(res, "data has been loaded!", data);
       })
@@ -239,6 +303,9 @@ class MainController {
   }
   static createEducation(req, res) {
     const payload = req.body;
+    const userInfo = req.userInfo
+
+    payload.UserId = userInfo.userId
 
     EducationService.create(payload)
       .then(() => {
@@ -251,25 +318,47 @@ class MainController {
   static updateEducation(req, res) {
     const id = req.params.id;
     const payload = req.body;
+    const userInfo = req.userInfo
+    
+    EducationService.findById(id).then((data) => {
+      if (data == null) {
+        return ResponseJSON.notFound(res, "data not founded!");
+      }
 
-    EducationService.update(id, payload)
-      .then(() => {
-        return ResponseJSON.success(res, "update data successfully");
-      })
-      .catch((err) => {
-        return ResponseJSON.badRequest(res, "error!", err);
-      });
+      if (data.dataValues.UserId != userInfo.userId) {
+        return ResponseJSON.unauthorized(res, "unauthorized user!");
+      }
+
+      EducationService.update(id, payload)
+        .then(() => {
+          return ResponseJSON.success(res, "update data successfully");
+        })
+        .catch((err) => {
+          return ResponseJSON.badRequest(res, "error!", err);
+        });
+    });
   }
   static deleteEducation(req, res) {
     const id = req.params.id;
+    const userInfo = req.userInfo;
 
-    EducationService.delete(id)
-      .then(() => {
-        return ResponseJSON.success(res, "delete data successfully");
-      })
-      .catch(() => {
+    EducationService.findById(id).then((data) => {
+      if (data == null) {
         return ResponseJSON.notFound(res, "data not founded!");
-      });
+      }
+
+      if (data.dataValues.UserId != userInfo.userId) {
+        return ResponseJSON.unauthorized(res, "unauthorized user");
+      }
+
+      EducationService.delete(id)
+        .then(() => {
+          return ResponseJSON.success(res, "delete data successfully");
+        })
+        .catch(() => {
+          return ResponseJSON.notFound(res, "data not founded!");
+        });
+    });
   }
   // certificates
   static getCertificate(req, res) {
@@ -284,7 +373,9 @@ class MainController {
       });
   }
   static getAllCertificate(req, res) {
-    CertificateService.getAll()
+    const userId = req.query.userId;
+
+    CertificateService.getAll(userId)
       .then((data) => {
         return ResponseJSON.successWithData(res, "data has been loaded!", data);
       })
@@ -294,6 +385,9 @@ class MainController {
   }
   static createCertificate(req, res) {
     const payload = req.body;
+    const userInfo = req.userInfo
+
+    payload.UserId = userInfo.userId
 
     CertificateService.create(payload)
       .then(() => {
@@ -306,25 +400,53 @@ class MainController {
   static updateCertificate(req, res) {
     const id = req.params.id;
     const payload = req.body;
+    const userInfo = req.userInfo;
 
-    CertificateService.update(id, payload)
-      .then(() => {
-        return ResponseJSON.success(res, "update data successfully");
-      })
-      .catch((err) => {
-        return ResponseJSON.badRequest(res, "error!", err);
-      });
+    CertificateService.findById(id).then(
+      data => {
+        if (data == null) {
+          return ResponseJSON.notFound(res, "data not founded!")
+        }
+
+        if (data.dataValues.UserId != userInfo.userId) {
+          return ResponseJSON.unauthorized(res, "unauthorized user!")
+        }
+
+        CertificateService.update(id, payload)
+          .then(() => {
+            return ResponseJSON.success(res, "update data successfully");
+          })
+          .catch((err) => {
+            return ResponseJSON.badRequest(res, "error!", err);
+          });
+      }
+    )
+
+ 
   }
   static deleteCertificate(req, res) {
     const id = req.params.id;
+    const userInfo = req.userInfo;
 
-    CertificateService.delete(id)
-      .then(() => {
-        return ResponseJSON.success(res, "delete data successfully");
-      })
-      .catch(() => {
+    CertificateService.findById(id).then((data) => {
+      if (data == null) {
         return ResponseJSON.notFound(res, "data not founded!");
-      });
+      }
+
+      if (data.dataValues.UserId != userInfo.userId) {
+        return ResponseJSON.unauthorized(res, "unauthorized user!");
+      }
+
+      CertificateService.delete(id)
+        .then(() => {
+          return ResponseJSON.success(res, "delete data successfully");
+        })
+        .catch(() => {
+          return ResponseJSON.notFound(res, "data not founded!");
+        });
+    });
+
+    
   }
   // contacts
   static getContact(req, res) {
@@ -339,7 +461,9 @@ class MainController {
       });
   }
   static getAllContact(req, res) {
-    ContactService.getAll()
+    const userId = req.query.userId;
+
+    ContactService.getAll(userId)
       .then((data) => {
         return ResponseJSON.successWithData(res, "data has been loaded!", data);
       })
@@ -349,6 +473,9 @@ class MainController {
   }
   static createContact(req, res) {
     const payload = req.body;
+    const userInfo = req.userInfo;
+
+    payload.UserId = userInfo.userId
 
     ContactService.create(payload)
       .then(() => {
@@ -361,25 +488,53 @@ class MainController {
   static updateContact(req, res) {
     const id = req.params.id;
     const payload = req.body;
+    const userInfo = req.userInfo;
 
-    ContactService.update(id, payload)
-      .then(() => {
-        return ResponseJSON.success(res, "update data successfully");
-      })
-      .catch((err) => {
-        return ResponseJSON.badRequest(res, "error", err);
-      });
+
+    ContactService.findById(id).then(
+      data => {
+        if (data == null) {
+          return ResponseJSON.notFound(res, "data not founded!")
+        }
+
+        if (data.dataValues.UserId != userInfo.userId) {
+          return ResponseJSON.unauthorized(res, "unauthorized user")
+        }
+
+        ContactService.update(id, payload)
+          .then(() => {
+            return ResponseJSON.success(res, "update data successfully");
+          })
+          .catch((err) => {
+            return ResponseJSON.badRequest(res, "error", err);
+          });
+      }
+    )
+
+    
   }
   static deleteContact(req, res) {
     const id = req.params.id;
+    const userInfo = req.userInfo;
 
-    ContactService.delete(id)
-      .then(() => {
-        return ResponseJSON.success(res, "delete data successfully");
-      })
-      .catch(() => {
+    ContactService.findById(id).then((data) => {
+      if (data == null) {
         return ResponseJSON.notFound(res, "data not founded!");
-      });
+      }
+
+      if (data.dataValues.UserId != userInfo.userId) {
+        return ResponseJSON.unauthorized(res, "unauthorized user");
+      }
+
+      ContactService.delete(id)
+        .then(() => {
+          return ResponseJSON.success(res, "delete data successfully");
+        })
+        .catch(() => {
+          return ResponseJSON.notFound(res, "data not founded!");
+        });
+    });
+
   }
   // skills
   static getSkill(req, res) {
@@ -394,7 +549,9 @@ class MainController {
       });
   }
   static getAllSkill(req, res) {
-    SkillService.getAll()
+    const userId = req.query.userId;
+
+    SkillService.getAll(userId)
       .then((data) => {
         return ResponseJSON.successWithData(res, "data has been loaded!", data);
       })
@@ -404,6 +561,8 @@ class MainController {
   }
   static createSkill(req, res) {
     const payload = req.body;
+
+    payload.UserId = req.userInfo.userId
 
     SkillService.create(payload)
       .then(() => {
@@ -416,25 +575,51 @@ class MainController {
   static updateSkill(req, res) {
     const id = req.params.id;
     const payload = req.body;
+    const userInfo = req.userInfo;
 
-    SkillService.update(id, payload)
-      .then(() => {
-        return ResponseJSON.success(res, "update data successfully");
-      })
-      .catch((err) => {
-        return ResponseJSON.badRequest(res, "error!", err);
-      });
+    SkillService.findById(id).then(
+      data => {
+        if (data == null) {
+          return ResponseJSON.notFound(res, "data not founded!")
+        }
+
+        if (data.dataValues.UserId != userInfo.userId) {
+          return ResponseJSON.unauthorized(res, "unauthorized user!")
+        }
+
+        SkillService.update(id, payload)
+          .then(() => {
+            return ResponseJSON.success(res, "update data successfully");
+          })
+          .catch((err) => {
+            return ResponseJSON.badRequest(res, "error!", err);
+          });
+      }
+    )
+    
   }
   static deleteSkill(req, res) {
     const id = req.params.id;
+    const userInfo = req.userInfo;
 
-    SkillService.delete(id)
-      .then(() => {
-        return ResponseJSON.success(res, "delete data successfully");
-      })
-      .catch(() => {
+    SkillService.findById(id).then((data) => {
+      if (data == null) {
         return ResponseJSON.notFound(res, "data not founded!");
-      });
+      }
+
+      if (data.dataValues.UserId != userInfo.userId) {
+        return ResponseJSON.unauthorized(res, "unauthorized user!");
+      }
+
+      SkillService.delete(id)
+        .then(() => {
+          return ResponseJSON.success(res, "delete data successfully");
+        })
+        .catch(() => {
+          return ResponseJSON.notFound(res, "data not founded!");
+        });
+    });
+
   }
 }
 

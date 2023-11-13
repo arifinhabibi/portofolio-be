@@ -5,8 +5,12 @@ class CertificateService {
     return await CertificateModel.findByPk(id);
   }
 
-  static async getAll() {
-    return await CertificateModel.findAll();
+  static async getAll(userId) {
+    return await CertificateModel.findAll({
+      where: {
+        UserId: userId,
+      },
+    });
   }
 
   static async create(payload) {

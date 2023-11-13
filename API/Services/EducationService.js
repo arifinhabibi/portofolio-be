@@ -5,8 +5,12 @@ class EducationService {
     return await EducationModel.findByPk(id);
   }
 
-  static async getAll() {
-    return await EducationModel.findAll();
+  static async getAll(userId) {
+    return await EducationModel.findAll({
+      where: {
+        UserId: userId,
+      },
+    });
   }
 
   static async create(payload) {
