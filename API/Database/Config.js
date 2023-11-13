@@ -9,7 +9,7 @@ import UserModel from "../Models/UserModel.js";
 import sequelize from "./Connection.js";
 import databaseSeeder from "./Seeder.js";
 
-// make table, please don't change list rules
+// create table, please don't change list rules
 // 1. model user
 // 2. model profile
 // 3. model experience
@@ -31,8 +31,10 @@ new ContactModel();
 const configDatabase = (async () => {
   try {
     // register tables
-    await sequelize.sync({ force: true });
-    databaseSeeder();
+    // await sequelize.sync({ force: true });
+    // databaseSeeder();
+    await sequelize.sync();
+    
     console.log("Tables has been created!");
   } catch (error) {
     console.log("Error creating tables:", error);

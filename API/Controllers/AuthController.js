@@ -9,9 +9,7 @@ configDotenv();
 class AuthController {
   static login(req, res) {
     const payload = req.body;
-    const user = UserService.findByUsername(payload.username);
-
-    user
+    UserService.findByUsername(payload.username)
       .then((data) => {
         bcrypt.compare(payload.password, data.password, async (err, result) => {
           if (result) {
@@ -51,36 +49,37 @@ class AuthController {
 
   static logout(req, res) {
     const userInfo = req.userInfo;
-    const user = UserService.findById(userInfo.userId);
-
-    user
+    UserService.findById(userInfo.userId)
       .then((data) => {
+        if (data == null) {
+          ResponseJSON.unauthorized(res, "Unauthorized User");
+        }
         UserService.update(data.id, { token: null });
         ProfileService.updateByUserId(data.id, { last_login: Date.now() });
         ResponseJSON.success(res, "Logout Success!");
       })
-      .catch(() => {
-        ResponseJSON.unauthorized(res, "Unauthorized User");
-      });
   }
 
   static changePassword(req, res) {
     const userInfo = req.userInfo;
     const payload = req.body;
-    const user = UserService.findById(userInfo.userId);
-    user
-      .then((data) => {
-        bcrypt.compare(payload.oldPass, data.password, (err, result) => {
-          if (err) {
-            return ResponseJSON.unauthorized(res, "Unauthorized User!");
-          }
-          UserService.update(data.id, { password: payload.newPass });
+    UserService.findById(userInfo.userId).then((data) => {
+      if (data == null) {
+        return ResponseJSON.unauthorized(res, "Unauthorized User!");
+      }
+
+      bcrypt.compare(payload.oldPass, data.password, (err, result) => {
+        if (!result) {
+          return ResponseJSON.forbidden(res, "wrong password!");
+        }
+
+        UserService.update(data.id, {
+          password: bcrypt.hashSync(payload.newPass, 16),
+        }).then(() => {
           ResponseJSON.success(res, "Change Password Success!");
         });
-      })
-      .catch(() => {
-        return ResponseJSON.unauthorized(res, "Unauthorized User!");
       });
+    });
   }
 }
 

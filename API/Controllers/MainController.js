@@ -14,9 +14,8 @@ class MainController {
   // profiles
   static getProfile(req, res) {
     const id = req.params.userId;
-    const profile = ProfileService.findByUserId(id);
-
-    profile
+    
+    ProfileService.findByUserId(id)
       .then((data) => {
         return ResponseJSON.successWithData(res, "success load data!", data);
       })
@@ -25,9 +24,7 @@ class MainController {
       });
   }
   static getAllProfile(req, res) {
-    const profiles = ProfileService.getAll();
-
-    profiles
+    ProfileService.getAll()
       .then((data) => {
         return ResponseJSON.successWithData(res, "data has been loaded!", data);
       })
@@ -81,21 +78,21 @@ class MainController {
         .then((user) => {
           payload.profileId = user.id;
           ProfileService.create(payload)
-            .then(() => {
+            .then(() => { 
               return ResponseJSON.success(res, "created data successfully");
             })
             .catch((err) => {
               return ResponseJSON.badRequest(res, "error!", err);
             });
         })
-        .catch((err) => {
+        .catch(() => {
           return ResponseJSON.forbidden(res, "error");
         });
     });
   }
   static updateProfile(req, res) {
     const payload = req.body;
-    const userId = req.params.userId;
+    const userId = req.userInfo.userId
 
     ProfileService.updateByUserId(userId, payload)
       .then(() => {
@@ -109,7 +106,6 @@ class MainController {
   // experiences
   static getExperience(req, res) {
     const id = req.params.id;
-    
 
     ExperienceService.findById(id)
       .then((data) => {
