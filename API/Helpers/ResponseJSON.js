@@ -39,4 +39,7 @@ class ResponseJSON {
   }
 }
 
+// if you wanna know detail for meaning code status response
+// see https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+
 export default ResponseJSON;

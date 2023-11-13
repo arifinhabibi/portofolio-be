@@ -19,7 +19,7 @@ const users = [
 
 const databaseSeeder = () => {
   // users
-  users.forEach((user, index) => {
+  users.forEach((user) => {
     UserModel.create(user).then((resp) => {
       ProfileModel.create({
         profileId: resp.dataValues.id,
