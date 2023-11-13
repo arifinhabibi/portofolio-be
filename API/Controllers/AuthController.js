@@ -19,6 +19,7 @@ class AuthController {
               {
                 userId: data.id,
                 username: data.username,
+                role: data.role,
               },
               process.env.JWT_SECRET_KEY,
               {

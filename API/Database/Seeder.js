@@ -8,21 +8,22 @@ const users = [
   {
     username: "arifinhabibi",
     password: password,
+    fullname: "Muhammad Arifin Habibi",
   },
   {
     username: "user",
     password: password,
+    fullname: "Alexander Pererro",
   },
 ];
 
 const databaseSeeder = () => {
   // users
   users.forEach((user, index) => {
-    var createUser = UserModel.create(user);
-    createUser.then((resp) => {
+    UserModel.create(user).then((resp) => {
       ProfileModel.create({
         profileId: resp.dataValues.id,
-        fullname: "Muhammad Arifin Habibi",
+        fullname: user.fullname,
       });
     });
   });

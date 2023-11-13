@@ -20,22 +20,27 @@ router.post(
   AuthController.changePassword
 );
 
-// main
-router.get("/profile", Middlware.authJWT, MainController.getAllProfile);
-router.post("/profile", Middlware.authJWT, MainController.createProfile);
-router.get("/profile/:id", Middlware.authJWT, MainController.getProfile);
-router.put("/profile/:id", Middlware.authJWT, MainController.updateProfile);
-router.delete("/profile/:id", Middlware.authJWT, MainController.deleteProfile);
 
-router.get("/project", Middlware.authJWT, MainController.getAllProject);
+// profiles
+router.get("/profile", MainController.getAllProfile);
+router.post("/profile", MainController.createProfile);
+router.get("/profile/:userId", MainController.getProfile);
+router.put("/profile/:userId", Middlware.authJWT, MainController.updateProfile);
+router.delete("/profile/:userId", Middlware.authJWT, MainController.deleteProfile);
+
+
+// project
+router.get("/project", MainController.getAllProject);
 router.post("/project", Middlware.authJWT, MainController.createProject);
-router.get("/project/:id", Middlware.authJWT, MainController.getProject);
-router.put("/project/:id", MainController.updateProject);
+router.get("/project/:id", MainController.getProject);
+router.put("/project/:id", Middlware.authJWT, MainController.updateProject);
 router.delete("/project/:id", Middlware.authJWT, MainController.deleteProject);
 
-router.get("/experience", Middlware.authJWT, MainController.getAllExperience);
+
+// experiences
+router.get("/experience", MainController.getAllExperience);
 router.post("/experience", Middlware.authJWT, MainController.createExperience);
-router.get("/experience/:id", Middlware.authJWT, MainController.getExperience);
+router.get("/experience/:id", MainController.getExperience);
 router.put(
   "/experience/:id",
   Middlware.authJWT,
@@ -47,9 +52,11 @@ router.delete(
   MainController.deleteExperience
 );
 
-router.get("/education", Middlware.authJWT, MainController.getAllEducation);
+
+// education
+router.get("/education", MainController.getAllEducation);
 router.post("/education", Middlware.authJWT, MainController.createEducation);
-router.get("/education/:id", Middlware.authJWT, MainController.getEducation);
+router.get("/education/:id", MainController.getEducation);
 router.put("/education/:id", Middlware.authJWT, MainController.updateEducation);
 router.delete(
   "/education/:id",
@@ -57,17 +64,15 @@ router.delete(
   MainController.deleteEducation
 );
 
-router.get("/certificate", Middlware.authJWT, MainController.getAllCertificate);
+
+// certificates
+router.get("/certificate", MainController.getAllCertificate);
 router.post(
   "/certificate",
   Middlware.authJWT,
   MainController.createCertificate
 );
-router.get(
-  "/certificate/:id",
-  Middlware.authJWT,
-  MainController.getCertificate
-);
+router.get("/certificate/:id", MainController.getCertificate);
 router.put(
   "/certificate/:id",
   Middlware.authJWT,
@@ -79,18 +84,24 @@ router.delete(
   MainController.deleteCertificate
 );
 
-router.get("/contact", Middlware.authJWT, MainController.getAllContact);
+
+// contacts
+router.get("/contact", MainController.getAllContact);
 router.post("/contact", Middlware.authJWT, MainController.createContact);
-router.get("/contact/:id", Middlware.authJWT, MainController.getContact);
+router.get("/contact/:id", MainController.getContact);
 router.put("/contact/:id", Middlware.authJWT, MainController.updateContact);
 router.delete("/contact/:id", Middlware.authJWT, MainController.deleteContact);
 
-router.get("/skill", Middlware.authJWT, MainController.getAllSkill);
+
+// skills
+router.get("/skill", MainController.getAllSkill);
 router.post("/skill", Middlware.authJWT, MainController.createSkill);
-router.get("/skill/:id", Middlware.authJWT, MainController.getSkill);
+router.get("/skill/:id", MainController.getSkill);
 router.put("/skill/:id", Middlware.authJWT, MainController.updateSkill);
 router.delete("/skill/:id", Middlware.authJWT, MainController.deleteSkill);
 
+
+// route for download file resume
 router.get("/download/resume/:file", (req, res) => {
   const file = req.params.file;
 

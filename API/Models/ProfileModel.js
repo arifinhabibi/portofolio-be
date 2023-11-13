@@ -6,10 +6,6 @@ const ProfileModel = sequelize.define("Profile", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  role: {
-    type: DataTypes.ENUM("owner", "user"),
-    defaultValue: "user",
-  },
   address: {
     type: DataTypes.TEXT("long"),
     allowNull: true,

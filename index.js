@@ -4,7 +4,6 @@ import bodyParser from "body-parser";
 import { configDotenv } from "dotenv";
 import configDatabase from "./API/Database/Config.js";
 import Middlware from "./API/Middleware/Middleware.js";
-import fs from "fs";
 
 const app = express();
 configDotenv();

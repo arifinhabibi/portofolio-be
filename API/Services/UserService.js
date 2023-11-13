@@ -2,7 +2,7 @@ import UserModel from "../Models/UserModel.js";
 
 class UserService {
   static async findByUsername(username) {
-    const user = await UserModel.findOne({
+    return await UserModel.findOne({
       where: {
         username: username,
       },
@@ -11,21 +11,22 @@ class UserService {
       },
       include: ["profile"],
     });
-    return user;
   }
 
   static async findById(id) {
     return await UserModel.findByPk(id);
   }
 
+  static async create(payload){
+    return await UserModel.create(payload)
+  }
   static async update(userId, payload) {
-    const update = await UserModel.update(payload, {
+    return await UserModel.update(payload, {
       where: {
         id: userId,
       },
     });
 
-    return update;
   }
 }
 
