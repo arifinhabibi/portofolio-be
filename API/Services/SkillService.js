@@ -4,6 +4,30 @@ class SkillService {
   static async findById(id) {
     return await SkillModel.findByPk(id);
   }
+
+  static async getAll() {
+    return await SkillModel.findAll();
+  }
+
+  static async create(payload) {
+    return await SkillModel.create(payload);
+  }
+
+  static async update(id, payload) {
+    return await SkillModel.update(payload, {
+      where: {
+        id: id,
+      },
+    });
+  }
+
+  static async delete(id) {
+    return await SkillModel.destroy({
+      where: {
+        id: id,
+      },
+    });
+  }
 }
 
 export default SkillService;

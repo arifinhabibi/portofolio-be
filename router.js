@@ -26,7 +26,6 @@ router.get("/profile", MainController.getAllProfile);
 router.post("/profile", MainController.createProfile);
 router.get("/profile/:userId", MainController.getProfile);
 router.put("/profile/:userId", Middlware.authJWT, MainController.updateProfile);
-router.delete("/profile/:userId", Middlware.authJWT, MainController.deleteProfile);
 
 
 // project
