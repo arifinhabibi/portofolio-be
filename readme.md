@@ -1,5 +1,5 @@
 
-# Backend RESTful API Application For Web Personal Portofolio
+# Backend RESTful API Application For Personal Portofolio
 
 Hi, i will tell you how to setup this app into your local device.
 ## Installation
@@ -27,7 +27,7 @@ npm run start
 + [MIT](https://github.com/arifinhabibi/portofolio-be/blob/main/LICENSE)
 
 
-## Donate For Coffe
+## Donate For Coffee
 
 
 * ![BNB](https://user-images.githubusercontent.com/80776324/230691108-ecd10132-af58-4064-8c44-ad10f6f55dd1.png) **BNB: 0xC485dbe8df3de132eD8F1ed629634A9817B5EC56**

@@ -1,8 +1,8 @@
 {
   "name": "portofolio-be",
   "version": "1.0.0",
-  "description": "This is api application for my web portofolio",
-  "main": "index.js",
+  "description": "This is api application for personal web portofolio",
+  "main": "https://github.com/arifinhabibi/portofolio-be",
   "type": "module",
   "scripts": {
     "dev": "nodemon index.js",
@@ -18,7 +18,7 @@
   ],
   "author": {
     "name": "Muhammad Arifin Habibi",
-    "email": "arifinhabibi76@gmail.com",
+    "email": "arifinhabibi94@gmail.com",
     "url": "https://www.cvarifinhabibi.my.id"
   },
   "license": "MIT",
